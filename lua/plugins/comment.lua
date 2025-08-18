@@ -1,0 +1,22 @@
+-- return {
+  -- 'numToStr/Comment.nvim',
+  -- config = function()
+  --   require('Comment').setup {
+  --     -- Shortcuts personalizzati
+  --     toggler = {
+  --       line = 'gcc', -- Riga singola
+  --       block = 'gbc', -- Blocco
+  --     },
+  --     opleader = {
+  --       line = 'gc', -- Operatore per riga
+  --       block = 'gb', -- Operatore per blocco
+  --     },
+  --     -- Mappings aggiuntivi
+  --     extra = {
+  --       above = 'gcO', -- Commenta sopra
+  --       below = 'gco', -- Commenta sotto
+  --       eol = 'gcA', -- Commenta a fine riga
+  --     },
+  --   }
+  -- end,
+-- }

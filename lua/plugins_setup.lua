@@ -76,6 +76,7 @@ require('lazy').setup({
 -- ============================================================================================
   -- The following module do the magic of the intellisense.
   require 'plugins.lsp_plugins',
+  --require 'plugins.lsp',
 -- ============================================================================================
 
   --require 'plugins.conform', -- Formatting buffer.
@@ -90,7 +91,6 @@ require('lazy').setup({
 
   require 'plugins.treesitter', -- Highlight, edit, and navigate code
 
-  -- From now added by me and not from kickstart config
   require 'plugins.neo-tree',
 
   require('plugins.keymap').setup(),

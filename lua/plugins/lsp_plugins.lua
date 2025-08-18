@@ -1,17 +1,21 @@
 -- LSP Plugins
 return {
   {
-  -- `lazydev` configures Lua LSP for your Neovim config, runtime and plugins
-  -- used for completion, annotations and signatures of Neovim apis
-  'folke/lazydev.nvim',
-  ft = 'lua',
-  opts = {
-    library = {
-      -- Load luvit types when the `vim.uv` word is found
-      { path = 'luvit-meta/library', words = { 'vim%.uv' } },
+    -- `lazydev` configures Lua LSP for your Neovim config, runtime and plugins
+    -- used for completion, annotations and signatures of Neovim apis
+    'folke/lazydev.nvim',
+    ft = 'lua',
+    opts = {
+      library = {
+        -- Load luvit types when the `vim.uv` word is found
+        { path = 'luvit-meta/library', words = { 'vim%.uv' } },
+      },
     },
   },
-}, { 'Bilal2453/luvit-meta', lazy = true }, {
+  -- {
+  --   'Bilal2453/luvit-meta', lazy = true 
+  -- },
+  {
   -- Main LSP Configuration
   'neovim/nvim-lspconfig',
   dependencies = {
@@ -54,8 +58,8 @@ return {
         end
 
         -- Jump to the definition of the word under your cursor.
-        --  This is where a variable was first declared, or where a function is defined, etc.
-        --  To jump back, press <C-t>.
+        -- This is where a variable was first declared, or where a function is defined, etc.
+        -- To jump back, press <C-t>.
         map('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
 
         -- Find references for the word under your cursor.
@@ -180,7 +184,7 @@ return {
 
     require('mason-lspconfig').setup {
       ensure_installed = {}, -- explicitly set to an empty table (Kickstart populates installs via mason-tool-installer)
-      automatic_installation = false,
+      -- automatic_installation = false,
       handlers = {
         function(server_name)
           local server = servers[server_name] or {}
