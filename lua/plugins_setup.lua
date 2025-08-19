@@ -26,6 +26,7 @@ vim.opt.rtp:prepend(lazypath)
 -- with the first argument being the link and the following
 -- keys can be used to configure plugin behavior/loading/etc.
 --
+--nico
 -- Use `opts = {}` to force a plugin to be loaded.
 -- This is often very useful to both group configuration, as well as handle
 -- lazy loading plugins that don't need to be loaded immediately at startup.
@@ -93,7 +94,7 @@ require('lazy').setup({
 
   require 'plugins.neo-tree',
 
-  require('plugins.keymap').setup(),
+  require('plugins.custom_keymap').setup(),
 },
   {
   ui = {

@@ -1,5 +1,4 @@
 # CCNeovim
-
 ## Introduction
 
 This is my Neovim configuration, I started this from the repository:

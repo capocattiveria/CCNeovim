@@ -1,4 +1,5 @@
 return {
+  {
   -- Colorschemes: `:Telescope colorscheme`.
   'folke/tokyonight.nvim',
   priority = 1000, -- Make sure to load this before all the other start plugins.
@@ -11,4 +12,13 @@ return {
     -- You can configure highlights by doing something like:
     vim.cmd.hi 'Comment gui=none'
   end,
+  },
+  {
+    "morhetz/gruvbox",
+    lazy = false,
+    priority = 1000,
+    config = function()
+      vim.cmd("colorscheme gruvbox")
+    end,
+  }
 }
