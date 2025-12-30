@@ -17,6 +17,9 @@ return {
   },
   opts = {
     filesystem = {
+      filtered_items = {
+        hide_gitignored = false
+      },
       window = {
         mappings = {
           ['\\'] = 'close_window',

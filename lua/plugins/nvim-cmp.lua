@@ -46,6 +46,19 @@ return { -- Autocompletion
           luasnip.lsp_expand(args.body)
         end,
       },
+      performance = { max_view_entries = 10 },
+
+      formatting = {
+        fields = { "abbr", "kind", "menu" },
+        format = function(entry, vim_item)
+          -- Tronca le label troppo lunghe
+          local maxwidth = 40
+          if #vim_item.abbr > maxwidth then
+            vim_item.abbr = string.sub(vim_item.abbr, 1, maxwidth) .. "…"
+          end
+          return vim_item
+        end,
+      },
       completion = { completeopt = 'menu,menuone,noinsert' },
 
       -- For an understanding of why these mappings were

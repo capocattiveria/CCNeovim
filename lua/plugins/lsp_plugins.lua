@@ -62,6 +62,9 @@ return {
         -- To jump back, press <C-t>.
         map('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
 
+        -- Mostra diagnostica del cursore in float window
+        --map('n', '<leader>d', vim.diagnostic.open_float, { desc = "Show diagnostic under cursor" })
+
         -- Find references for the word under your cursor.
         map('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
 

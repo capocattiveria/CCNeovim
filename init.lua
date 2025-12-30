@@ -75,7 +75,7 @@ vim.opt.updatetime = 150
 
 -- Decrease mapped sequence wait time
 -- Displays which-key popup sooner
-vim.opt.timeoutlen = 150
+vim.opt.timeoutlen = 300
 
 -- Configure how new splits should be opened
 vim.opt.splitright = true
@@ -96,6 +96,11 @@ vim.opt.cursorline = true
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
 
+--[[
+***********************************************************************
+***************************** CUSTOM KEYMAP ***************************
+***********************************************************************
+--]]
 
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
@@ -104,6 +109,12 @@ vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left wind
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+
+-- Resizing window keymap
+vim.keymap.set("n", "<A-h>", ":vertical resize -2<CR>", { desc = 'Decrease width'})
+vim.keymap.set("n", "<A-l>", ":vertical resize +2<CR>", { desc = 'Increase width'})
+vim.keymap.set("n", "<A-j>", ":resize -2<CR>", { desc = 'Decrease heigth'})
+vim.keymap.set("n", "<A-k>", ":resize +2<CR>", { desc = 'Increase heigth'})
 
 -- Only use the system clipboard with leader, otherwise Ubuntu slow down the yanking system.
 vim.keymap.set("n", "<leader>y", '"+y', { desc = 'Copy to system clipboard' })
@@ -140,42 +151,51 @@ require("plugins_setup")
 --vim.api.nvim_set_keymap('n', '<leader>i', ':lua vim.opt.list = not vim.opt.list:get()<CR>', { desc = 'Toggle [I]nvisible Characters', silent = true })
 
 
-function CloseBufferLineKeepPrevious()
-  local current = vim.api.nvim_get_current_buf()
-  local buffers = vim.fn.getbufinfo({buflisted = 1})
-
-  -- Filter out Neotree buffer(s)
-  local valid_buffers = {}
-  for _, b in ipairs(buffers) do
-    if not vim.api.nvim_buf_get_name(b.bufnr):match("NvimTree_") then
-      table.insert(valid_buffers, b.bufnr)
-    end
-  end
-
-  if #valid_buffers <= 1 then
-    -- Last buffer, exit Neovim
-    vim.cmd("qa")
-  else
-    -- Switch to previous buffer in bufferline
-    local prev_buf = vim.fn.bufnr("#")
-    if prev_buf <= 0 or vim.api.nvim_buf_get_name(prev_buf):match("NvimTree_") then
-      -- fallback: pick the first buffer that's not current or Neotree
-      for _, b in ipairs(valid_buffers) do
-        if b ~= current then
-          prev_buf = b
-          break
-        end
-      end
-    end
-
-    -- Switch to previous buffer
-    vim.cmd("buffer " .. prev_buf)
-    -- Delete current buffer
-    vim.cmd("bdelete " .. current)
-  end
-end
+-- function CloseBufferLineKeepPrevious()
+--   local current = vim.api.nvim_get_current_buf()
+--   local buffers = vim.fn.getbufinfo({buflisted = 1})
 --
+--   -- Filter out Neotree buffer(s)
+--   local valid_buffers = {}
+--   for _, b in ipairs(buffers) do
+--     if not vim.api.nvim_buf_get_name(b.bufnr):match("NvimTree_") then
+--       table.insert(valid_buffers, b.bufnr)
+--     end
+--   end
+--
+--   if #valid_buffers <= 1 then
+--     -- Last buffer, exit Neovim
+--     vim.cmd("qa")
+--   else
+--     -- Switch to previous buffer in bufferline
+--     local prev_buf = vim.fn.bufnr("#")
+--     if prev_buf <= 0 or vim.api.nvim_buf_get_name(prev_buf):match("NvimTree_") then
+--       -- fallback: pick the first buffer that's not current or Neotree
+--       for _, b in ipairs(valid_buffers) do
+--         if b ~= current then
+--           prev_buf = b
+--           break
+--         end
+--       end
+--     end
+--
+--     -- Switch to previous buffer
+--     vim.cmd("buffer " .. prev_buf)
+--     -- Delete current buffer
+--     vim.cmd("bdelete " .. current)
+--   end
+-- end
+-- --
 -- Map it to <leader>q
-vim.keymap.set("n", "<leader>q", CloseBufferLineKeepPrevious, { noremap = true, silent = true })
+-- vim.keymap.set("n", "<leader>q", CloseBufferLineKeepPrevious, { noremap = true, silent = true })
 
+-- Indentazione 4 spazi solo per C++
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "cpp", "hpp", "h" },
+  callback = function()
+    vim.opt_local.tabstop = 4
+    vim.opt_local.shiftwidth = 4
+    vim.opt_local.expandtab = true
+  end,
+})
 

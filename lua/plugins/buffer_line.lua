@@ -19,6 +19,10 @@ return {
 		  separator = true
  		}
  	      },
+              -- Mostra solo i buffer aperti nella tab corrente
+              filter = function(buf)
+                return vim.fn.tabpagenr('$') == 1 or vim.fn.tabpagenr() == vim.fn.bufwinnr(buf)
+              end,
  	      -- Mostra icone
  	      show_buffer_icons = true,
  	      show_buffer_close_icons = true,
