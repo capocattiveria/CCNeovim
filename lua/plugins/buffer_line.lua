@@ -9,7 +9,7 @@ return {
  	      -- Numeri sui buffer
  	      numbers = "ordinal", -- o "ordinal" | "buffer_id" | "both"
  	      -- Separatori
- 	      separator_style = "slant", -- o "thick" | "thin" | "padded_slant"
+ 	      separator_style = "thin", -- "slant" | "thick" | "thin" | "padded_slant"
  	      -- Integrazione con Neo-tree
  	      offsets = {
  		{
@@ -21,7 +21,7 @@ return {
  	      },
               -- Mostra solo i buffer aperti nella tab corrente
               filter = function(buf)
-                return vim.fn.tabpagenr('$') == 1 or vim.fn.tabpagenr() == vim.fn.bufwinnr(buf)
+                 return vim.fn.tabpagenr('$') == 1 or vim.fn.tabpagenr() == vim.fn.bufwinnr(buf)
               end,
  	      -- Mostra icone
  	      show_buffer_icons = true,
@@ -42,10 +42,10 @@ return {
       vim.keymap.set("n", "<leader>q", "<cmd>bdelete<CR>", { desc = "Close buffer" })
 
       -- Leader + numero → vai al buffer N
-      for i = 1, 9 do
-        vim.keymap.set("n", "<leader>" .. i, "<cmd>BufferLineGoToBuffer " .. i .. "<CR>",
-          { desc = "Go to buffer " .. i })
-      end
+      -- for i = 1, 9 do
+      --   vim.keymap.set("n", "<leader>" .. i, "<cmd>BufferLineGoToBuffer " .. i .. "<CR>",
+      --     { desc = "Go to buffer " .. i })
+      -- end
      end
   }
 }

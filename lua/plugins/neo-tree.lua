@@ -21,6 +21,7 @@ return {
         hide_gitignored = false
       },
       window = {
+        --position = "right",
         mappings = {
           ['\\'] = 'close_window',
         }
