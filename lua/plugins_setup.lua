@@ -62,6 +62,11 @@ require('lazy').setup({
       },
     },
   },
+  {
+	'windwp/nvim-autopairs',
+	event = "InsertEnter",
+	config = true -- Questo esegue automaticamente require('nvim-autopairs').setup({})
+  },
 
 -- ============================================================================================
 -- |              Plugins with largest configuration are in single file                       |
@@ -93,6 +98,7 @@ require('lazy').setup({
   require 'plugins.treesitter', -- Highlight, edit, and navigate code
 
   require 'plugins.neo-tree',
+
 
 
   require('plugins.custom_keymap').setup(),

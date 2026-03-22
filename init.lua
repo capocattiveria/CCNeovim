@@ -210,6 +210,8 @@ end
 --Map it to <leader>q
 vim.keymap.set("n", "<leader>q", CloseBufferLineKeepPrevious, { noremap = true, silent = true })
 
+--------------------------------------------------------------------------------------------------
+-- C++ formatting
 -- Indentazione 4 spazi solo per C++
 vim.api.nvim_create_autocmd("FileType", {
   pattern = { "cpp", "hpp", "h" },
@@ -221,10 +223,15 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
-
 vim.cmd([[colorscheme gruvbox]])
 
 
+-- Definiamo due colori: uno per Normal e uno per Insert
+vim.api.nvim_set_hl(0, 'MyCursor', 			{ fg = '#000000', 	bg = '#ff9e64' }) -- Arancione
+vim.api.nvim_set_hl(0, 'MyInsertCursor', 	{ fg = '#1a1b26', 	bg = '#7aa2f7' }) -- Blu
+vim.api.nvim_set_hl(0, 'Visual', 			{ fg = 'none' ,		bg = '#3b4261'} ) -- blue with transparent
+
+vim.opt.guicursor = "n-v-c:block-MyCursor,i-ci-ve:ver25-MyInsertCursor,r-cr:hor20-MyCursor"
 
 
 
