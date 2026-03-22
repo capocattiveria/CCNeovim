@@ -154,14 +154,17 @@ require("plugins_setup")
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- ts=2 sts=2 sw=2 et
-vim.opt.tabstop = 2
-vim.opt.softtabstop = 2
-vim.opt.shiftwidth = 2
-vim.opt.expandtab = true
+vim.opt.tabstop = 4
+vim.opt.softtabstop = 0
+vim.opt.shiftwidth = 4
+vim.opt.expandtab = false
 
 -- Make invisible characters visible
---vim.opt.listchars = { tab = '»·', trail = 'x', extends = '>', precedes = '<', space = '·', eol = '↲' }
---vim.api.nvim_set_keymap('n', '<leader>i', ':lua vim.opt.list = not vim.opt.list:get()<CR>', { desc = 'Toggle [I]nvisible Characters', silent = true })
+vim.opt.listchars = { tab = '»·', trail = 'x', extends = '>', precedes = '<', space = '·', eol = '↲' }
+
+vim.opt.list = false
+
+vim.api.nvim_set_keymap('n', '<leader>i', ':lua vim.opt.list = not vim.opt.list:get()<CR>', { desc = 'Toggle [I]nvisible Characters', silent = true })
 
 
 -- ************************************************************************************************
@@ -212,6 +215,7 @@ vim.api.nvim_create_autocmd("FileType", {
   pattern = { "cpp", "hpp", "h" },
   callback = function()
     vim.opt_local.tabstop = 4
+    vim.opt_local.softtabstop = 0
     vim.opt_local.shiftwidth = 4
     vim.opt_local.expandtab = false
   end,

@@ -42,7 +42,7 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup({
 
   -- Simple plugin with minimal configuration are inserted here
-  'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
+  --'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
 
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim',
