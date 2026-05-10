@@ -101,7 +101,7 @@ require('lazy').setup({
 
 
 
-  --require('plugins.custom_keymap').setup(),
+  require('plugins.custom_keymap').setup(),
 },
   {
   ui = {
