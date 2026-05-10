@@ -42,10 +42,10 @@ return {
       vim.keymap.set("n", "<leader>q", "<cmd>bdelete<CR>", { desc = "Close buffer" })
 
       -- Leader + numero → vai al buffer N
-      -- for i = 1, 9 do
-      --   vim.keymap.set("n", "<leader>" .. i, "<cmd>BufferLineGoToBuffer " .. i .. "<CR>",
-      --     { desc = "Go to buffer " .. i })
-      -- end
+       for i = 1, 9 do
+         vim.keymap.set("n", "<leader>" .. i, "<cmd>BufferLineGoToBuffer " .. i .. "<CR>",
+           { desc = "Go to buffer " .. i })
+      end
      end
   }
 }

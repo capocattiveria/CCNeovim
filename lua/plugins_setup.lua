@@ -67,13 +67,13 @@ require('lazy').setup({
 	event = "InsertEnter",
 	config = true -- Questo esegue automaticamente require('nvim-autopairs').setup({})
   },
-
 -- ============================================================================================
 -- |              Plugins with largest configuration are in single file                       |
 -- |                        inside the plugings directory                                     |
 -- ============================================================================================
 
   --require 'plugins.copilot', -- Copilot plugin
+  require 'plugins.persistence',
 
   require 'plugins.buffer_line', -- Buffer line, show open buffers in a top line.
 

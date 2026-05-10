@@ -223,8 +223,9 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+--------------------------------------------------------------------------------------------------
+-- STYLE
 vim.cmd([[colorscheme gruvbox]])
-
 
 -- Definiamo due colori: uno per Normal e uno per Insert
 vim.api.nvim_set_hl(0, 'MyCursor', 			{ fg = '#000000', 	bg = '#ff9e64' }) -- Arancione
@@ -233,5 +234,6 @@ vim.api.nvim_set_hl(0, 'Visual', 			{ fg = 'none' ,		bg = '#3b4261'} ) -- blue w
 
 vim.opt.guicursor = "n-v-c:block-MyCursor,i-ci-ve:ver25-MyInsertCursor,r-cr:hor20-MyCursor"
 
+--------------------------------------------------------------------------------------------------
 
 
