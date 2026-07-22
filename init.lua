@@ -176,44 +176,44 @@ vim.api.nvim_set_keymap('n', '<leader>i', ':lua vim.opt.list = not vim.opt.list:
 -- Used for close the buffer, and switch to prev_buf opened
 -- ************************************************************************************************
 
-function CloseBufferLineKeepPrevious()
-  local current = vim.api.nvim_get_current_buf()
-  local buffers = vim.fn.getbufinfo({buflisted = 1})
-
-  -- Filter out Neotree buffer(s)
-  local valid_buffers = {}
-  for _, b in ipairs(buffers) do
-    if not vim.api.nvim_buf_get_name(b.bufnr):match("NvimTree_") then
-      table.insert(valid_buffers, b.bufnr)
-    end
-  end
-
-  if #valid_buffers <= 1 then
-    -- Last buffer, exit Neovim
-    vim.cmd("qa")
-  else
-    -- Switch to previous buffer in bufferline
-    local prev_buf = vim.fn.bufnr("#")
-    if prev_buf <= 0 or vim.api.nvim_buf_get_name(prev_buf):match("NvimTree_") then
-      -- fallback: pick the first buffer that's not current or Neotree
-      for _, b in ipairs(valid_buffers) do
-        if b ~= current then
-          prev_buf = b
-          break
-        end
-      end
-    end
-
-    -- Switch to previous buffer
-    vim.cmd("buffer " .. prev_buf)
-    -- Delete current buffer
-    vim.cmd("bdelete " .. current)
-  end
-end
-
---Map it to <leader>q
-vim.keymap.set("n", "<leader>q", CloseBufferLineKeepPrevious, { noremap = true, silent = true })
-
+-- function CloseBufferLineKeepPrevious()
+--   local current = vim.api.nvim_get_current_buf()
+--   local buffers = vim.fn.getbufinfo({buflisted = 1})
+--
+--   -- Filter out Neotree buffer(s)
+--   local valid_buffers = {}
+--   for _, b in ipairs(buffers) do
+--     if not vim.api.nvim_buf_get_name(b.bufnr):match("NvimTree_") then
+--       table.insert(valid_buffers, b.bufnr)
+--     end
+--   end
+--
+--   if #valid_buffers <= 1 then
+--     -- Last buffer, exit Neovim
+--     vim.cmd("qa")
+--   else
+--     -- Switch to previous buffer in bufferline
+--     local prev_buf = vim.fn.bufnr("#")
+--     if prev_buf <= 0 or vim.api.nvim_buf_get_name(prev_buf):match("NvimTree_") then
+--       -- fallback: pick the first buffer that's not current or Neotree
+--       for _, b in ipairs(valid_buffers) do
+--         if b ~= current then
+--           prev_buf = b
+--           break
+--         end
+--       end
+--     end
+--
+--     -- Switch to previous buffer
+--     vim.cmd("buffer " .. prev_buf)
+--     -- Delete current buffer
+--     vim.cmd("bdelete " .. current)
+--   end
+-- end
+--
+-- --Map it to <leader>q
+-- vim.keymap.set("n", "<leader>q", CloseBufferLineKeepPrevious, { noremap = true, silent = true })
+--
 --------------------------------------------------------------------------------------------------
 -- C++ formatting
 -- Indentazione 4 spazi solo per C++
