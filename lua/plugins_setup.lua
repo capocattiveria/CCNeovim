@@ -73,7 +73,6 @@ require('lazy').setup({
 -- ============================================================================================
 
   --require 'plugins.copilot', -- Copilot plugin
-  require 'plugins.persistence',
 
   require 'plugins.buffer_line', -- Buffer line, show open buffers in a top line.
 
@@ -99,7 +98,7 @@ require('lazy').setup({
 
   require 'plugins.neo-tree',
 
-
+  require 'plugins.persistence',
 
   require('plugins.custom_keymap').setup(),
 },

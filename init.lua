@@ -240,4 +240,3 @@ vim.opt.guicursor = "n-v-c:block-MyCursor,i-ci-ve:ver25-MyInsertCursor,r-cr:hor2
 
 --------------------------------------------------------------------------------------------------
 
-

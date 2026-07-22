@@ -101,7 +101,7 @@ return {
         --
           -- When you move your cursor, the highlights will be cleared (the second autocommand).
         local client = vim.lsp.get_client_by_id(event.data.client_id)
-        if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
+        if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
           local highlight_augroup = vim.api.nvim_create_augroup('kickstart-lsp-highlight', { clear = false })
           vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
             buffer = event.buf,
@@ -152,7 +152,18 @@ return {
     --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
     local servers = {
       -- See `:help lspconfig-all` for a list of all the pre-configured LSPs
-      clangd = {},
+      clangd = {
+		  cmd = {
+		  "clangd",
+		  "--background-index",
+		  "--clang-tidy",
+		  "--completion-style=detailed",
+		  "--header-insertion=never",
+		},
+		init_options = {
+      fallbackFlags = { "-std=c++17" },
+    	},
+	  },
       gopls = {},
       pyright = {},
 
@@ -189,7 +200,7 @@ return {
     -- for you, so that they are available from within Neovim.
     local ensure_installed = vim.tbl_keys(servers or {})
     vim.list_extend(ensure_installed, {
-      'stylua', -- Used to format Lua code
+      --'stylua', -- Used to format Lua code
     })
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
