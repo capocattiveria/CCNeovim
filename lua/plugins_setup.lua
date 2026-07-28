@@ -99,7 +99,8 @@ require('lazy').setup({
   require 'plugins.neo-tree',
 
   require 'plugins.bufdelete',
-  --require 'plugins.nvim-tree',
+
+  require 'plugins.otter',
 
   require 'plugins.persistence',
 
