@@ -1,94 +1,94 @@
 return {
-  "greggh/claude-code.nvim",
-  dependencies = {
-    "nvim-lua/plenary.nvim", -- Required for git operations
+  -- Integrazione "vera" di Claude Code: implementa lo stesso protocollo delle
+  -- estensioni IDE ufficiali, quindi puoi selezionare del codice in visual mode
+  -- e inviarlo a Claude con :ClaudeCodeSend (<leader>cs).
+  "coder/claudecode.nvim",
+  -- 'folke/snacks.nvim' e' opzionale: serve solo per il provider di terminale
+  -- "snacks". Qui usiamo il terminale nativo di Neovim, nessuna dipendenza extra.
+  dependencies = { "nvim-lua/plenary.nvim" },
+
+  -- Carica il plugin solo quando serve davvero (comando o keymap).
+  cmd = {
+    "ClaudeCode",
+    "ClaudeCodeFocus",
+    "ClaudeCodeSend",
+    "ClaudeCodeAdd",
+    "ClaudeCodeTreeAdd",
+    "ClaudeCodeStatus",
+    "ClaudeCodeStart",
+    "ClaudeCodeStop",
+    "ClaudeCodeSelectModel",
+    "ClaudeCodeDiffAccept",
+    "ClaudeCodeDiffDeny",
   },
-  config = function()
-    require("claude-code").setup({
-      -- Terminal window settings
-      window = {
-        split_ratio = 0.3,      -- Percentage of screen for the terminal window (height for horizontal, width for vertical splits)
-        position = "botright",  -- Position of the window: "botright", "topleft", "vertical", "float", etc.
-        enter_insert = true,    -- Whether to enter insert mode when opening Claude Code
-        hide_numbers = true,    -- Hide line numbers in the terminal window
-        hide_signcolumn = true, -- Hide the sign column in the terminal window
 
-        -- Floating window configuration (only applies when position = "float")
-        float = {
-          width = "80%",        -- Width: number of columns or percentage string
-          height = "80%",       -- Height: number of rows or percentage string
-          row = "center",       -- Row position: number, "center", or percentage string
-          col = "center",       -- Column position: number, "center", or percentage string
-          relative = "editor",  -- Relative to: "editor" or "cursor"
-          border = "rounded",   -- Border style: "none", "single", "double", "rounded", "solid", "shadow"
-        },
-      },
-      -- File refresh settings
-      refresh = {
-        enable = true,           -- Enable file change detection
-        updatetime = 100,        -- updatetime when Claude Code is active (milliseconds)
-        timer_interval = 1000,   -- How often to check for file changes (milliseconds)
-        show_notifications = true, -- Show notification when files are reloaded
-      },
-      -- Git project settings
-      git = {
-        use_git_root = true,     -- Set CWD to git root when opening Claude Code (if in git project)
-      },
-      -- Shell-specific settings
-      shell = {
-        separator = '&&',        -- Command separator used in shell commands
-        pushd_cmd = 'pushd',     -- Command to push directory onto stack (e.g., 'pushd' for bash/zsh, 'enter' for nushell)
-        popd_cmd = 'popd',       -- Command to pop directory from stack (e.g., 'popd' for bash/zsh, 'exit' for nushell)
-      },
-      -- Command settings
-      command = "claude",        -- Command used to launch Claude Code
-      -- Command variants
-      command_variants = {
-        -- Conversation management
-        continue = "--continue", -- Resume the most recent conversation
-        resume = "--resume",     -- Display an interactive conversation picker
+  keys = {
+    { "<leader>cl", "<cmd>ClaudeCode<cr>", desc = "Claude Code: Toggle" },
+    { "<leader>cf", "<cmd>ClaudeCodeFocus<cr>", desc = "Claude Code: Focus" },
+    { "<leader>cL", "<cmd>ClaudeCode --continue<cr>", desc = "Claude Code: Continue" },
+    { "<leader>cr", "<cmd>ClaudeCode --resume<cr>", desc = "Claude Code: Resume (picker)" },
+    { "<leader>cm", "<cmd>ClaudeCodeSelectModel<cr>", desc = "Claude Code: Seleziona modello" },
 
-        -- Output options
-        verbose = "--verbose",   -- Enable verbose logging with full turn-by-turn output
-      },
-      -- Keymaps
-      --
-      -- Tutte le keymap automatiche del plugin sono disabilitate qui sotto per
-      -- evitare che facciano l'override delle remap personali:
-      --   * window_navigation rimappa <C-h/j/k/l> nel buffer del terminale Claude
-      --   * scrolling rimappa <C-f>/<C-b> nel buffer del terminale Claude
-      --   * toggle/variants registrano keymap globali (<C-,>, <leader>cC, <leader>cV)
-      -- Le keymap che vogliamo davvero le impostiamo a mano piu' sotto, e solo se
-      -- il tasto non e' gia' occupato.
-      keymaps = {
-        toggle = {
-          normal = false,
-          terminal = false,
-          variants = {
-            continue = false,
-            verbose = false,
-          },
-        },
-        window_navigation = false, -- Non toccare <C-h/j/k/l>
-        scrolling = false,         -- Non toccare <C-f>/<C-b>
-      },
-    })
+    -- Stesso toggle di greggh/claude-code.nvim, in normale e in terminale.
+    { "<C-,>", "<cmd>ClaudeCode<cr>", mode = { "n", "t" }, desc = "Claude Code: Toggle" },
 
-    -- Imposta una keymap solo se non e' gia' definita (globalmente), cosi' non
-    -- sovrascriviamo mai una remap esistente.
+    -- >>> La feature che volevi: seleziona il codice (v / V) e invialo a Claude.
+    { "<leader>cs", "<cmd>ClaudeCodeSend<cr>", mode = "v", desc = "Claude Code: Invia selezione" },
+
+    -- Aggiunge il buffer corrente al contesto (senza selezione).
+    { "<leader>cb", "<cmd>ClaudeCodeAdd %<cr>", desc = "Claude Code: Aggiungi buffer corrente" },
+
+    -- Dentro neo-tree: <leader>cs aggiunge il file/cartella sotto il cursore.
+    {
+      "<leader>cs",
+      "<cmd>ClaudeCodeTreeAdd<cr>",
+      ft = { "neo-tree", "NvimTree", "oil", "minifiles" },
+      desc = "Claude Code: Aggiungi file dall'albero",
+    },
+
+    -- Gestione dei diff che Claude apre quando modifica i file.
+    -- (<leader>ca e' gia' la code action dell'LSP, quindi usiamo cy / cn.)
+    { "<leader>cy", "<cmd>ClaudeCodeDiffAccept<cr>", desc = "Claude Code: Accetta diff" },
+    { "<leader>cn", "<cmd>ClaudeCodeDiffDeny<cr>", desc = "Claude Code: Rifiuta diff" },
+  },
+
+  opts = {
+    -- Avvia in automatico il server WebSocket a cui si aggancia la CLI `claude`.
+    auto_start = true,
+    log_level = "info",
+    -- Comando per lanciare la CLI (nil = usa `claude` nel PATH).
+    terminal_cmd = nil,
+
+    terminal = {
+      split_side = "right",
+      split_width_percentage = 0.40,
+      provider = "native", -- terminale nativo di Neovim, niente snacks
+      auto_close = true,
+    },
+
+    diff_opts = {
+      auto_close_on_accept = true,
+      show_diff_stats = true,
+      vertical_split = true,
+      open_in_current_tab = true,
+    },
+  },
+
+  init = function()
+    -- Spostamento tra finestre da DENTRO il terminale di Claude. 
+    -- <C-j> resta libero perche' a Claude serve per l'a capo nel prompt: per
+    -- cambiare finestra usiamo il prefisso standard di Vim <C-w> + direzione.
     local function map_if_free(mode, lhs, rhs, opts)
       if vim.fn.maparg(lhs, mode) ~= "" then
-        vim.notify(
-          ("claude-code: keymap %s (%s) gia' in uso, non la sovrascrivo"):format(lhs, mode),
-          vim.log.levels.WARN
-        )
         return
       end
       vim.keymap.set(mode, lhs, rhs, opts)
     end
 
-    map_if_free("n", "<leader>cl", "<cmd>ClaudeCode<CR>", { desc = "Claude Code: Toggle" })
-    map_if_free("t", "<C-,>", [[<C-\><C-n>:ClaudeCode<CR>]], { desc = "Claude Code: Toggle" })
-    map_if_free("n", "<leader>cL", "<cmd>ClaudeCodeContinue<CR>", { desc = "Claude Code: Continue" })
+    for _, dir in ipairs({ "h", "j", "k", "l", "w", "p" }) do
+      map_if_free("t", "<C-w>" .. dir, [[<C-\><C-n><C-w>]] .. dir, {
+        desc = "Claude Code: vai alla finestra " .. dir,
+      })
+    end
   end,
 }
