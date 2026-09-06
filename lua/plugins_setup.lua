@@ -104,7 +104,8 @@ require('lazy').setup({
 
   require 'plugins.persistence',
 
-  require('plugins.custom_keymap').setup(),
+  require 'plugins.claude',
+
 },
   {
    ui = {
@@ -127,3 +128,6 @@ require('lazy').setup({
      },
    },
 })
+
+-- custom_keymap è un modulo helper, non uno spec di lazy: va chiamato a parte
+require('plugins.custom_keymap').setup()

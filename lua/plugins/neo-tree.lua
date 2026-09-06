@@ -30,7 +30,7 @@ return {
 		  },
 	  close_if_last_window = false,
 	  window = {
-		position = "left",
+		position = "float",
 		width = 30,
 	  },
 	},
