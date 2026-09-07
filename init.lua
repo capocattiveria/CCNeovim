@@ -116,6 +116,7 @@ vim.opt.scrolloff = 10
 --]]
 
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
+vim.keymap.set('t', 'jk', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
 --  See `:help wincmd` for a list of all window commands
 vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
@@ -139,18 +140,6 @@ vim.keymap.set("v", "<leader>p", '"+p', { desc = 'Replace text with the system c
 vim.keymap.set("n", "//", ":nohlsearch<CR>", 
                { desc = 'Clear the highlight', noremap = true, silent = true })
 
--- Highlight when yanking (copying) text
---  Try it with `yap` in normal mode
---  See `:help vim.highlight.on_yank()`
---
--- vim.api.nvim_create_autocmd('TextYankPost', {
---   desc = 'Highlight when yanking (copying) text',
---   group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
---   callback = function()
---     vim.highlight.on_yank()
---   end,
--- })
-
 -- ======================================================================================================
 
 -- All Plugin are inside the lua/plug
@@ -170,50 +159,6 @@ vim.opt.list = false
 
 vim.api.nvim_set_keymap('n', '<leader>i', ':lua vim.opt.list = not vim.opt.list:get()<CR>', { desc = 'Toggle [I]nvisible Characters', silent = true })
 
-
--- ************************************************************************************************
--- CloseBufferLineKeepPrevious
--- Used for close the buffer, and switch to prev_buf opened
--- ************************************************************************************************
-
--- function CloseBufferLineKeepPrevious()
---   local current = vim.api.nvim_get_current_buf()
---   local buffers = vim.fn.getbufinfo({buflisted = 1})
---
---   -- Filter out Neotree buffer(s)
---   local valid_buffers = {}
---   for _, b in ipairs(buffers) do
---     if not vim.api.nvim_buf_get_name(b.bufnr):match("NvimTree_") then
---       table.insert(valid_buffers, b.bufnr)
---     end
---   end
---
---   if #valid_buffers <= 1 then
---     -- Last buffer, exit Neovim
---     vim.cmd("qa")
---   else
---     -- Switch to previous buffer in bufferline
---     local prev_buf = vim.fn.bufnr("#")
---     if prev_buf <= 0 or vim.api.nvim_buf_get_name(prev_buf):match("NvimTree_") then
---       -- fallback: pick the first buffer that's not current or Neotree
---       for _, b in ipairs(valid_buffers) do
---         if b ~= current then
---           prev_buf = b
---           break
---         end
---       end
---     end
---
---     -- Switch to previous buffer
---     vim.cmd("buffer " .. prev_buf)
---     -- Delete current buffer
---     vim.cmd("bdelete " .. current)
---   end
--- end
---
--- --Map it to <leader>q
--- vim.keymap.set("n", "<leader>q", CloseBufferLineKeepPrevious, { noremap = true, silent = true })
---
 --------------------------------------------------------------------------------------------------
 -- C++ formatting
 -- Indentazione 4 spazi solo per C++
