@@ -96,6 +96,10 @@ require('lazy').setup({
 
   require 'plugins.treesitter', -- Highlight, edit, and navigate code
 
+  require 'plugins.treesitter_context', -- Intestazione sticky con la funzione corrente
+
+  require 'plugins.dropbar', -- Winbar con briciole di pane: file › classe › funzione
+
   require 'plugins.neo-tree',
 
   require 'plugins.bufdelete',
