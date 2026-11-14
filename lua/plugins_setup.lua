@@ -44,29 +44,29 @@ require('lazy').setup({
   -- Simple plugin with minimal configuration are inserted here
   --'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
 
-  -- Highlight todo, notes, etc in comments
-  { 'folke/todo-comments.nvim',
-    event = 'VimEnter',
-    dependencies = { 'nvim-lua/plenary.nvim' },
-    opts = { signs = false }
-  },
-  { -- git symbols on the column
-    'lewis6991/gitsigns.nvim',
-    opts = {
-      signs = {
-        add = { text = '+' },
-        change = { text = '~' },
-        delete = { text = '_' },
-        topdelete = { text = '‾' },
-        changedelete = { text = '~' },
-      },
-    },
-  },
-  {
-	'windwp/nvim-autopairs',
-	event = "InsertEnter",
-	config = true -- Questo esegue automaticamente require('nvim-autopairs').setup({})
-  },
+	-- Highlight todo, notes, etc in comments
+	{ 'folke/todo-comments.nvim',
+		event = 'VimEnter',
+		dependencies = { 'nvim-lua/plenary.nvim' },
+		opts = { signs = false }
+	},
+	{ -- git symbols on the column
+		'lewis6991/gitsigns.nvim',
+		opts = {
+		  signs = {
+			add = { text = '+' },
+			change = { text = '~' },
+			delete = { text = '_' },
+			topdelete = { text = '‾' },
+			changedelete = { text = '~' },
+		  },
+		},
+	},
+	{
+		'windwp/nvim-autopairs',
+		event = "InsertEnter",
+		config = true -- Questo esegue automaticamente require('nvim-autopairs').setup({})
+	},
 -- ============================================================================================
 -- |              Plugins with largest configuration are in single file                       |
 -- |                        inside the plugings directory                                     |
@@ -109,6 +109,8 @@ require('lazy').setup({
   require 'plugins.persistence',
 
   require 'plugins.claude',
+
+  require 'plugins.git'
 
 },
   {
