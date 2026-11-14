@@ -50,18 +50,6 @@ require('lazy').setup({
 		dependencies = { 'nvim-lua/plenary.nvim' },
 		opts = { signs = false }
 	},
-	{ -- git symbols on the column
-		'lewis6991/gitsigns.nvim',
-		opts = {
-		  signs = {
-			add = { text = '+' },
-			change = { text = '~' },
-			delete = { text = '_' },
-			topdelete = { text = '‾' },
-			changedelete = { text = '~' },
-		  },
-		},
-	},
 	{
 		'windwp/nvim-autopairs',
 		event = "InsertEnter",
