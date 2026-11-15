@@ -32,6 +32,10 @@ return {
         ['<C-n>'] = cmp.mapping.select_next_item(),
         ['<C-p>'] = cmp.mapping.select_prev_item(),
       },
+      -- Numero massimo di voci mostrate per volta nel menu
+      performance = {
+        max_view_entries = 8,
+      },
       sources = {
         { name = 'nvim_lsp' },
         { name = 'buffer' }, -- Fondamentale per le .equ
