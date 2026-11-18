@@ -29,6 +29,15 @@ return {
 			},
 		  },
 	  close_if_last_window = false,
+	  event_handlers = {
+		{
+		  event = "neo_tree_buffer_enter",
+		  handler = function()
+			vim.wo.number = true
+			vim.wo.relativenumber = true
+		  end,
+		},
+	  },
 	  window = {
 		position = "float",
 		width = 30,

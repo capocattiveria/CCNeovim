@@ -23,7 +23,6 @@ return {
     config = function()
       require("bufferline").setup {
         options = {
-          numbers = "ordinal",
           separator_style = "thin",
           custom_filter = only_real_buffers,
 
@@ -84,7 +83,7 @@ return {
       map("n", "<leader>bh", "<cmd>BufferLineCloseLeft<CR>", { desc = "[B]uffer: chiudi a sinistra" })
       map("n", "<leader>bl", "<cmd>BufferLineCloseRight<CR>", { desc = "[B]uffer: chiudi a destra" })
 
-      -- Navigazione (<S-l>, <S-h>, <leader>1..9): inerte nelle finestre "speciali"
+      -- Navigazione (<S-l>, <S-h>): inerte nelle finestre "speciali"
       -- (neo-tree, terminale, diffview, quickfix) per non caricare un file al loro posto.
       local special_ft = { ["neo-tree"] = true, DiffviewFiles = true, qf = true }
       local function is_special(win)
@@ -96,12 +95,6 @@ return {
           if is_special(0) then return end   -- inerte nelle finestre speciali
           vim.cmd(lhs == "<S-l>" and "BufferLineCycleNext" or "BufferLineCyclePrev")
         end, { desc = lhs == "<S-l>" and "Buffer successivo" or "Buffer precedente" })
-      end
-      for i = 1, 9 do
-        map("n", "<leader>" .. i, function()
-          if is_special(0) then return end
-          vim.cmd("BufferLineGoToBuffer " .. i)
-        end, { desc = "Vai al buffer " .. i })
       end
 
       -- I terminali non sono mai nella lista dei buffer
